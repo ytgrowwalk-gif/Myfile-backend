@@ -1,0 +1,12 @@
+{
+  "name": "myfiles-link-refresh",
+  "version": "1.0.0",
+  "description": "Auto refresh Telegram links",
+  "scripts": {
+    "refresh": "node scripts/refresh.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.11.0",
+    "axios": "^1.6.0"
+  }
+}
