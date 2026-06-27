@@ -1,0 +1,32 @@
+name: 🔄 Auto Refresh Telegram Links
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Har 6 ghante
+  workflow_dispatch:  # Manual run bhi
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 📦 Install dependencies
+        run: npm install firebase-admin axios
+      
+      - name: 🔑 Setup Firebase credentials
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > service-account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$PWD/service-account.json
+      
+      - name: 🔄 Refresh links
+        run: node scripts/refresh.js
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $PWD/service-account.json
